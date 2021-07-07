@@ -113,7 +113,7 @@
 
      /* todo context를 받아와 local storage에 저장 */
      const todos = useTodoState();
-     window.localStorage.setItem('todo', JSON.stringify(todos));     
+     //window.localStorage.setItem('todo', JSON.stringify(todos)); // local storage에 저장     
 
      const submitTodo = params =>{
       axios.post('http://localhost:8000/api/insert', params).then(response =>{

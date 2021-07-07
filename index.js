@@ -17,6 +17,14 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended:true}))
 
+/* DB에서 todo 가지고 온다 */
+app.get("/api/get", (req, res) => {
+    const sqlQuery = "SELECT * FROM todo;"
+    db.query(sqlQuery, (err, result)=>{
+        res.send(result);
+    })
+})
+
 app.post("/api/insert", (req, res) => {
     const id = req.body.id;
     const text = req.body.text;
