@@ -24,22 +24,34 @@ const TodoListBlock = styled.div `
 
 function TodoList() {
 
-  const [todos, setTodos] = useState([]);
-
+  // const [todos, setTodos] = useState([]);
+  const todos = useTodoState();
   /* DB에서 가져오기 */
+  const [DBtodos, setDBtodos] = useState([]);
+  
   useEffect(()=>{
     axios.get('http://localhost:8000/api/get').then((response)=>{
       console.log('r', response);
-      setTodos(response.data);
-    })
+      setDBtodos(response.data);
+    });
   },[]);
-
-  if (!todos.length) {
+    
+  if (!DBtodos.length) {
     return null;
   }
-
+  
   return (
     <TodoListBlock>
+      
+      {DBtodos.map(todo => (        
+        <TodoItem
+          key = {todo.id}
+          id = {todo.id}
+          text = {todo.text}
+          done = {todo.done}
+        />        
+      ))}
+      
       {todos.map(todo => (        
         <TodoItem
           key = {todo.id}
