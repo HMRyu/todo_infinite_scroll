@@ -33,7 +33,6 @@ app.post("/api/insert", (req, res) => {
     const sqlQuery = "INSERT INTO todo (id, text, done) VALUES (?, ?, ?)";
     db.query(sqlQuery, [id, text, done], (err, result) => {
         console.log("err", result, err);
-        res.json({ id: 1, username: "daisy" });
         //res.send('{"code": 200, "message: "등록되었습니다." }');
     });
 })

@@ -52,8 +52,7 @@ function TodoList() {
           key = {todo.id}
           id = {todo.id}
           text = {todo.text}
-          done = {todo.done}
-         
+          done = {todo.done}         
         />        
       ))}
       

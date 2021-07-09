@@ -8,14 +8,17 @@ const initialTodos = JSON.parse(localStorage.getItem('todo') || '[]');
 //const initialTodos = axios.get('http://localhost:8000/api/get');
 
 /* 상태 반환 */
+
 function todoReducer(state, action) {
   switch (action.type) {
     case 'CREATE':
       return state.concat(action.todo);
-    case 'TOGGLE':
-      return state.map(todo =>
+    case 'TOGGLE': {
+      console.log("state is : " + state);
+      state.map(todo =>
         todo.id === action.id ? { ...todo, done: !todo.done } : todo
       );
+    }
     case 'REMOVE':
       return state.filter(todo => todo.id !== action.id);
     default:
