@@ -106,7 +106,7 @@
 
        dispatch({
          type: 'CREATE',
-         todo
+         todo 
        });
        submitTodo(todo);              
      };

@@ -1,8 +1,13 @@
 import React, { useReducer, createContext, useContext, useRef } from 'react';
-
+import axios from 'axios';
+/* 지금은 localStorage를 사용하지 않아도 되기 때문에 주석처리
+JSON.parse => string 객체를 JSON으로 변경 */
 const initialTodos = JSON.parse(localStorage.getItem('todo') || '[]');
-console.log(initialTodos);
+//console.log(initialTodos);
 
+//const initialTodos = axios.get('http://localhost:8000/api/get');
+
+/* 상태 반환 */
 function todoReducer(state, action) {
   switch (action.type) {
     case 'CREATE':
@@ -24,7 +29,7 @@ const TodoNextIdContext = createContext();
 
 export function TodoProvider({ children }) {
   const [state, dispatch] = useReducer(todoReducer, initialTodos);
-  const nextId = useRef(localStorage.length);
+  const nextId = useRef(Math.floor(Math.random() * 999999));
   return (
     <TodoStateContext.Provider value={state}>
       <TodoDispatchContext.Provider value={dispatch}>

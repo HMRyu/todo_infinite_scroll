@@ -3,7 +3,8 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { MdDone, MdDelete } from 'react-icons/md';
-import { useTodoDispatch } from '../TodoContext';
+import { useTodoDispatch, useTodoState } from '../TodoContext';
+import axios from 'axios';
 
 const Remove = styled.div `
   display: flex;
@@ -62,9 +63,39 @@ const Text = styled.div`
 
 function TodoItem({ id, done, text }) {
   
+  const todos = useTodoState();
   const dispatch = useTodoDispatch();
-  const onToggle = () => dispatch({ type: 'TOGGLE', id });
-  const onRemove = () => dispatch({ type: 'REMOVE', id });
+  const onToggle = () => {
+    dispatch({ type: 'TOGGLE', id });
+    console.log('test', todos);
+    toggleTodo(id);
+  }
+  const onRemove = () => {
+    dispatch({ type: 'REMOVE', id });
+    removeTodo(todos);
+  }
+
+  /* 할 일 Toggle */
+  const toggleTodo = id => {
+    axios.post(`http://localhost:8000/api/update/${id}`, []).then(response => {
+      console.log('response', response);
+      const { data } = response || {data: {}};
+
+      console.log('11121212', response.data.message);
+      alert(response.data.message);
+    }).catch(() => {
+      alert('수정 실패!');
+    })
+  }
+
+  /* 할 일 Remove */
+  const removeTodo = id => {
+    axios.delete(`http://localhost:8000/api/remove/${id}`, []).then(response => {
+      alert('삭제 완료!');
+    }).catch(() => {
+      alert('삭제 실패!');
+    })
+  }
 
   return (
     <TodoItemBlock>

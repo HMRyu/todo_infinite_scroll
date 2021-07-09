@@ -35,6 +35,10 @@ function TodoList() {
       setDBtodos(response.data);
     });
   },[]);
+
+  const toggleItem = id => {
+    console.log('id', id);
+  }
     
   if (!DBtodos.length) {
     return null;
@@ -49,6 +53,7 @@ function TodoList() {
           id = {todo.id}
           text = {todo.text}
           done = {todo.done}
+         
         />        
       ))}
       

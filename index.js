@@ -25,12 +25,35 @@ app.get("/api/get", (req, res) => {
     })
 })
 
+/* 추가 */
 app.post("/api/insert", (req, res) => {
     const id = req.body.id;
     const text = req.body.text;
     const done = req.body.done;
     const sqlQuery = "INSERT INTO todo (id, text, done) VALUES (?, ?, ?)";
     db.query(sqlQuery, [id, text, done], (err, result) => {
+        console.log("err", result, err);
+        res.json({ id: 1, username: "daisy" });
+        //res.send('{"code": 200, "message: "등록되었습니다." }');
+    });
+})
+
+/* TOGGLE 수정 */
+app.post("/api/update/:id", (req, res) => {
+    const id = req.body.id;
+    const text = req.body.text;
+    const done = req.body.done;
+    const sqlQuery = "UPDATE todo SET done = !done WHERE id = ?";
+    db.query(sqlQuery, [req.params.id], (err, result) => {
+        console.log("err", result, err);
+        res.json({ code: 200, message: "수정되었습니다." });
+    });
+})
+
+/* 삭제 */
+app.del("/api/delete/:id", (req, res) => {
+    const sqlQuery = "DELETE FROM todo WHERE id = ?";
+    db.query(sqlQuery, [req.params.id], (err, result) => {
         res.send('success!');
     });
 })
