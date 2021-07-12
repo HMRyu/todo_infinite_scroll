@@ -33,15 +33,12 @@ app.post("/api/insert", (req, res) => {
     const sqlQuery = "INSERT INTO todo (id, text, done) VALUES (?, ?, ?)";
     db.query(sqlQuery, [id, text, done], (err, result) => {
         console.log("err", result, err);
-        //res.send('{"code": 200, "message: "등록되었습니다." }');
+        res.json({ code:200, message: "추가되었습니다."});
     });
 })
 
 /* TOGGLE 수정 */
 app.post("/api/update/:id", (req, res) => {
-    const id = req.body.id;
-    const text = req.body.text;
-    const done = req.body.done;
     const sqlQuery = "UPDATE todo SET done = !done WHERE id = ?";
     db.query(sqlQuery, [req.params.id], (err, result) => {
         console.log("err", result, err);
@@ -50,24 +47,13 @@ app.post("/api/update/:id", (req, res) => {
 })
 
 /* 삭제 */
-app.del("/api/delete/:id", (req, res) => {
+app.delete("/api/delete/:id", (req, res) => {
     const sqlQuery = "DELETE FROM todo WHERE id = ?";
     db.query(sqlQuery, [req.params.id], (err, result) => {
-        res.send('success!');
+        console.log("err", result, err);
+        res.json({ code:200, message: "삭제되었습니다."});
     });
 })
-
-/*
-app.post("/api/insert", (req, res) => {
-    const id = req.body.id
-    const text = req.body.text
-    const done = req.body.done
-    const sqlQuery = "INSERT INTO todo (id, text, done) VALUES ('1', 'test', true)";
-    db.query(sqlQuery, [id, text, done], (err, result) => {
-        res.send('success!');
-    });
-})
-*/
 
 // done 부분 true는 "" 없이 전송해야 전송됨
 

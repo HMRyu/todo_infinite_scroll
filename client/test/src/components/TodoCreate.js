@@ -119,7 +119,7 @@
       axios.post('http://localhost:8000/api/insert', params).then(response =>{
         alert('등록 완료!');
         console.log('response', response);
-
+      
         setValue('');
         setOpen(false);
         nextId.current += 1;   

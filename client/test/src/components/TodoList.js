@@ -36,17 +36,12 @@ function TodoList() {
     });
   },[]);
 
-  const toggleItem = id => {
-    console.log('id', id);
-  }
-    
   if (!DBtodos.length) {
     return null;
   }
   
   return (
-    <TodoListBlock>
-      
+    <TodoListBlock>      
       {DBtodos.map(todo => (        
         <TodoItem
           key = {todo.id}
@@ -55,7 +50,7 @@ function TodoList() {
           done = {todo.done}         
         />        
       ))}
-      
+          
       {todos.map(todo => (        
         <TodoItem
           key = {todo.id}

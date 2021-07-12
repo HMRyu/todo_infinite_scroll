@@ -72,7 +72,8 @@ function TodoItem({ id, done, text }) {
   }
   const onRemove = () => {
     dispatch({ type: 'REMOVE', id });
-    removeTodo(todos);
+    console.log('test', todos);
+    removeTodo(id);
   }
 
   /* 할 일 Toggle */
@@ -80,8 +81,6 @@ function TodoItem({ id, done, text }) {
     axios.post(`http://localhost:8000/api/update/${id}`, []).then(response => {
       console.log('response', response);
       const { data } = response || {data: {}};
-
-      console.log('11121212', response.data.message);
       alert(response.data.message);
     }).catch(() => {
       alert('수정 실패!');
@@ -91,7 +90,9 @@ function TodoItem({ id, done, text }) {
   /* 할 일 Remove */
   const removeTodo = id => {
     axios.delete(`http://localhost:8000/api/remove/${id}`, []).then(response => {
-      alert('삭제 완료!');
+      console.log('response', response);
+      const { data } = response || {data: {}};
+      alert(response.data.message);
     }).catch(() => {
       alert('삭제 실패!');
     })
