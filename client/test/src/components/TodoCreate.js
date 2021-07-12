@@ -123,6 +123,7 @@
         setValue('');
         setOpen(false);
         nextId.current += 1;   
+        
       });
     };
      

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { MdDone, MdDelete } from 'react-icons/md';
+import { MdDone, MdDelete,MdHighlightOff } from 'react-icons/md';
 import { useTodoDispatch, useTodoState } from '../TodoContext';
 import axios from 'axios';
 
@@ -36,17 +36,19 @@ const CheckCircle = styled.div `
   height: 32px;
   border-radius: 16px;
   border: 1px solid #ced4da;
-  font-size: 24px;
+  font-size:0px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-right: 20px;
   cursor: pointer;
+
   ${props =>
     props.done &&
     css`
       border: 1px solid #38d9a9;
       color: #38d9a9;
+      font-size:24px;
     `}
 `;
 
@@ -65,16 +67,17 @@ function TodoItem({ id, done, text }) {
   
   const todos = useTodoState();
   const dispatch = useTodoDispatch();
+  
   const onToggle = () => {
     dispatch({ type: 'TOGGLE', id });
     console.log('test', todos);
     toggleTodo(id);
-  }
+  };
   const onRemove = () => {
     dispatch({ type: 'REMOVE', id });
     console.log('test', todos);
     removeTodo(id);
-  }
+  };
 
   /* 할 일 Toggle */
   const toggleTodo = id => {
@@ -84,19 +87,21 @@ function TodoItem({ id, done, text }) {
       alert(response.data.message);
     }).catch(() => {
       alert('수정 실패!');
-    })
-  }
+    });
+    location.reload();
+  };
 
   /* 할 일 Remove */
   const removeTodo = id => {
-    axios.delete(`http://localhost:8000/api/remove/${id}`, []).then(response => {
+    axios.delete(`http://localhost:8000/api/delete/${id}`, []).then(response => {
       console.log('response', response);
       const { data } = response || {data: {}};
       alert(response.data.message);
     }).catch(() => {
       alert('삭제 실패!');
-    })
-  }
+    });
+    //location.reload();
+  };
 
   return (
     <TodoItemBlock>

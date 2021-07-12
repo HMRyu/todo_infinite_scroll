@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import TodoItem from './TodoItem';
-import { useTodoState } from '../TodoContext';
+import { useTodoState,useTodoDispatch } from '../TodoContext';
 import axios from 'axios';
 /* flex:1 => 자신이 차지하고 있는 영역은 꽉 채운다. */
 /* overflow-y 세로의 내용이 더 길 때 어떻게 보일지 선택하는 속성 
@@ -28,29 +28,48 @@ function TodoList() {
   const todos = useTodoState();
   /* DB에서 가져오기 */
   const [DBtodos, setDBtodos] = useState([]);
-  
-  useEffect(()=>{
+  //const [_DBtodos,_setDBtodos] = useState([]);
+  const dispatch = useTodoDispatch();
+
+ useEffect(()=>{
     axios.get('http://localhost:8000/api/get').then((response)=>{
       console.log('r', response);
       setDBtodos(response.data);
     });
   },[]);
 
-  if (!DBtodos.length) {
+  useEffect(() => {
+    dispatch ({
+      type: 'INIT',
+      DBtodos
+    });
+  },[DBtodos]);
+
+  /*if (!DBtodos.length) {
     return null;
-  }
-  
+  }*/
+  /*useEffect(() => {
+    axios.get('http://localhost:8000/api/get').then((res) => {
+      const _inputData = res.data.map((rowdata) => ({
+        id: rowdata.id,
+        text: rowdata.text,
+        done: rowdata.done
+      }));
+      setInitData(initData.concat(_inputData));
+    });
+  });*/
+
+  /*{DBtodos.map(todo => (        
+    <TodoItem
+      key = {todo.id}
+      id = {todo.id}
+      text = {todo.text}
+      done = {todo.done}         
+    />        
+  ))}*/
+
   return (
-    <TodoListBlock>      
-      {DBtodos.map(todo => (        
-        <TodoItem
-          key = {todo.id}
-          id = {todo.id}
-          text = {todo.text}
-          done = {todo.done}         
-        />        
-      ))}
-          
+    <TodoListBlock>           
       {todos.map(todo => (        
         <TodoItem
           key = {todo.id}
