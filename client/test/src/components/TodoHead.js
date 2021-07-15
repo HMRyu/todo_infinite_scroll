@@ -24,11 +24,18 @@ const TodoHeadBlock = styled.div`
     margin-top: 40px;
     font-weight: bold;
   }
+  .tasks-done {
+    color: #20c997;
+    font-size: 18px;
+    margin-top: 5px;
+    font-weight: bold;
+  }  
 `;
 
 function TodoHead() {
   const todos = useTodoState();
   const undoneTasks = todos.filter(todo => !todo.done);
+  const doneTasks = todos.filter(todo => todo.done);
 
   const today = new Date();
   const dateString = today.toLocaleDateString('ko-KR', {
@@ -43,7 +50,8 @@ function TodoHead() {
     <TodoHeadBlock>
       <h1>{dateString}</h1>
       <div className="day">{dayName}</div>
-      <div className="tasks-left">할 일 {undoneTasks.length}개 남음</div>
+      <div className="tasks-left">해야 할 일 {undoneTasks.length}개</div>
+      <div className="tasks-done">한 일 {doneTasks.length}개</div>
     </TodoHeadBlock>
   );
 }

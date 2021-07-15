@@ -42,7 +42,6 @@ const CheckCircle = styled.div `
   justify-content: center;
   margin-right: 20px;
   cursor: pointer;
-
   ${props =>
     props.done &&
     css`
@@ -70,25 +69,26 @@ function TodoItem({ id, done, text }) {
   
   const onToggle = () => {
     dispatch({ type: 'TOGGLE', id });
-    console.log('test', todos);
+    //console.log('test', todos);
     toggleTodo(id);
   };
+
   const onRemove = () => {
     dispatch({ type: 'REMOVE', id });
-    console.log('test', todos);
+    //console.log('test', todos);
     removeTodo(id);
   };
 
   /* 할 일 Toggle */
   const toggleTodo = id => {
     axios.post(`http://localhost:8000/api/update/${id}`, []).then(response => {
-      console.log('response', response);
+      //console.log('response', response);
       const { data } = response || {data: {}};
       alert(response.data.message);
     }).catch(() => {
       alert('수정 실패!');
     });
-    location.reload();
+    //location.reload();    
   };
 
   /* 할 일 Remove */

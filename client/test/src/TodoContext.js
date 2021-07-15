@@ -1,5 +1,6 @@
 import React, { useReducer, createContext, useContext, useRef } from 'react';
 import axios from 'axios';
+//import { toggleTodo } from './components/TodoItem';
 /* 지금은 localStorage를 사용하지 않아도 되기 때문에 주석처리
 JSON.parse => string 객체를 JSON으로 변경 */
 //const initialTodos = JSON.parse(localStorage.getItem('todo') || '[]');
@@ -13,18 +14,18 @@ function todoReducer(state, action) {
   switch (action.type) {
     case 'INIT' : {
       return state.concat(action.DBtodos);
-        };
+    };
     case 'CREATE':
       return state.concat(action.todo);
     case 'TOGGLE': {
-      //console.log(action.id);
-      state.map(todo =>
+      return state.map(todo =>
         todo.id === action.id ? { ...todo, done: !todo.done } : todo
-      );
+      );   
     }
     case 'REMOVE':
-      console.log("action id : " + action.id);
+      //console.log("action id : " + action.id);
       return state.filter(todo => todo.id !== action.id);
+
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }

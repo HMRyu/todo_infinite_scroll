@@ -23,7 +23,6 @@ const TodoListBlock = styled.div `
 `;
 
 function TodoList() {
-
   // const [todos, setTodos] = useState([]);
   const todos = useTodoState();
   /* DB에서 가져오기 */
@@ -31,13 +30,13 @@ function TodoList() {
   //const [_DBtodos,_setDBtodos] = useState([]);
   const dispatch = useTodoDispatch();
 
- useEffect(()=>{
+  useEffect(()=>{
     axios.get('http://localhost:8000/api/get').then((response)=>{
       console.log('r', response);
       setDBtodos(response.data);
     });
   },[]);
-
+  
   useEffect(() => {
     dispatch ({
       type: 'INIT',
