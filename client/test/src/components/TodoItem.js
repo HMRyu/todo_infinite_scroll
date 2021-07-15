@@ -94,7 +94,7 @@ function TodoItem({ id, done, text }) {
   /* 할 일 Remove */
   const removeTodo = id => {
     axios.delete(`http://localhost:8000/api/delete/${id}`, []).then(response => {
-      console.log('response', response);
+      //console.log('response', response);
       const { data } = response || {data: {}};
       alert(response.data.message);
     }).catch(() => {
